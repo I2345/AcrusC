@@ -9,7 +9,7 @@ local delfile = delfile
 
 local net = syn.request or httpget or http_request or requests
 
-local version = loadstring(game:HttpGet("https://raw.githubusercontent.com/I2345/AcrusC/main/version.dat"))
+local version = 1
 
 if console == nil then
     game.Players.LocalPlayer:Kick("Shitty exploit lmao")
@@ -43,13 +43,6 @@ function DownloadAssets(assetName, folder, url, isreDownloading)
 end
 local redownload = false
 
-if version > readfile("AcrusC/data") then
-
-    console("Redownloading Assets! Your Version: "..readfile("AcrusC/data").." New version: "..version)
-    redownload = true
-
-end
-
 MakeNewFolder("AcrusC")
 MakeNewFolder("AcrusC/assets")
 MakeNewFolder("AcrusC/assets/pictures")
@@ -58,20 +51,28 @@ MakeNewFolder("AcrusC/logs")
 MakeNewFolder("AcrusC/Configs")
 MakeNewFolder("AcrusC/data")
 
-DownloadAssets("kissinglmao.jpg", "AcrusC/assets/pictures", "https://raw.githubusercontent.com/I2345/AcrusC/main/assets/anime.jpg", redownload)
+if isfile("AcrusC/data/version.dat") then
+    if tostring(version) > readfile("AcrusC/data/version.dat") then
 
+        console("Redownloading Assets! Your Version: "..readfile("AcrusC/data/version.dat").." New version: "..version)
+        redownload = true
+    
+    end
+else
+    console("Redownloading Assets! Your Version: "..tostring("N.A").." New version: "..version)
+    redownload = true
+end
 writefile("AcrusC/data/version.dat", version)
+
+DownloadAssets("kissinglmao.jpg", "AcrusC/assets/pictures", "https://raw.githubusercontent.com/I2345/AcrusC/main/assets/anime.jpg", redownload)
 
 repeat
     task.wait()
 until game:IsLoaded()
 
-local gameList = loadstring(game:HttpGet("https://raw.githubusercontent.com/I2345/AcrusC/main/gamelist.lua"))
-
-if gameList[game.PlaceId] then
-
-    loadstring(game:HttpGet(gameList[game.PlaceId].Script))
-
+if game.PlaceId == 6870736769 then
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/I2345/AcrusC/main/scripts/Day%20Break.lua"))()
 end
+
 
 
